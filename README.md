@@ -5,6 +5,6 @@ Instructions for running :
 
 Run on command line :
 
-$ python3 xp.py -x q3.xml -s spec.xml
+$ python3 xp.py -x input.xml -s spec.xml
 
 final.xml will be the output file after masking.
