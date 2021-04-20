@@ -1,8 +1,10 @@
+import re
 from bs4 import BeautifulSoup
 import argparse
 import fileinput
+import random
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser() # for parsing command line argument list
 
 parser.add_argument("-x",dest="xml",metavar="FILE1", required=True, help="xml input file")
 parser.add_argument("-s",dest="spec",metavar="FILE2",required=True, help="Specification file")
@@ -20,12 +22,22 @@ def maskOut(input):
         return "127.1.1.1"
     elif input.name == "passportNumber":
         return "x"*len(input.text)
+    elif input.name == "expiryDate":
+        return "xx/xx"
+    else :
+        s = ""
+        for i in range(0,len(input.name)):
+            s.join("x")
+        return s
+
 
 
 maskElems = [] #elements that have to be masked
 swapElems = [] #elements that have to be swapped
 pseudoElems = [] #elements that have to be pseudonymized
 
+
+# find all the elements that have to be filtered
 htmlStream = ""
 
 if args.spec:
@@ -46,18 +58,26 @@ if args.spec:
         elif ftype.text == "pseudonymisation":
             pseudoElems.append(xp.text)
 
+# apply techniques to the input file
 if args.xml:
 
     with open(args.xml) as xml_file:
         xml_contents = xml_file.read()
         soup = BeautifulSoup(xml_contents, "xml")
     
+    #masking
     for elem in maskElems:
         elems = soup.find_all(elem)
         for elem2 in elems:
             elem2['mask']=True
             elem2.string.replace_with(maskOut(elem2))
     print(soup)
+
+    # #swapping
+    # for i in range(0,len(swapElems)//2):
+    #     n1 = random.randint(0,len(swapElems))
+    #     n2 = random.randint(0,len(swapElems))
+        # soup.find(swapElems[n1])
 
 with open("final.xml", "w") as pascal_file:
     pascal_file.write(soup.prettify())
