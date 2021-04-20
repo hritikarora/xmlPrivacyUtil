@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<personal>
+ <firstname>
+  hritik
+ </firstname>
+ <lastname>
+  arora
+ </lastname>
+ <passportNumber mask="True">
+  xxxxxxxxx
+ </passportNumber>
+ <pincode mask="True">
+  xxxxxx
+ </pincode>
+ <ipaddress mask="True">
+  127.1.1.1
+ </ipaddress>
+</personal>
