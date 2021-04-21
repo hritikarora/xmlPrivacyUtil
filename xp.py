@@ -25,9 +25,7 @@ def maskOut(input):
     elif input.name == "expiryDate":
         return "xx/xx"
     else :
-        s = ""
-        for i in range(0,len(input.name)):
-            s.join("x")
+        s = "x"*len(input.text)
         return s
 
 
@@ -73,11 +71,13 @@ if args.xml:
             elem2.string.replace_with(maskOut(elem2))
     print(soup)
 
-    # #swapping
-    # for i in range(0,len(swapElems)//2):
-    #     n1 = random.randint(0,len(swapElems))
-    #     n2 = random.randint(0,len(swapElems))
-        # soup.find(swapElems[n1])
+    #swapping ex : ['firstname','lastname']
+    # for i in range(0,len(swapElems)):
+    #     elems = soup.find_all(swapElems[i])
+    #     if len(elems)>1:
+
+
+
 
 with open("final.xml", "w") as pascal_file:
     pascal_file.write(soup.prettify())
